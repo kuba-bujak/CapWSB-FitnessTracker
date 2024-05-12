@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/v1/users")
@@ -23,6 +24,11 @@ class UserController {
                           .stream()
                           .map(basicUserMapper::toDto)
                           .toList();
+    }
+
+    @GetMapping("/user/{id}")
+    public Optional<User> getUserById(@PathVariable("id") final Long id) {
+        return userService.getUser(id);
     }
 
     @PostMapping
