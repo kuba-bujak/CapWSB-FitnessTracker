@@ -2,6 +2,7 @@ package com.capgemini.wsb.fitnesstracker.user.internal;
 
 import com.capgemini.wsb.fitnesstracker.user.api.User;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -32,13 +33,13 @@ class UserController {
     }
 
     @PostMapping
-    public User addUser(@RequestBody UserDto userDto) {
+    public ResponseEntity<User> addUser(@RequestBody UserDto userDto) {
 
         // Demonstracja how to use @RequestBody
         System.out.println("User with e-mail: " + userDto.email() + "passed to the request");
 
-        // TODO: saveUser with Service and return User
-        return null;
+        User addedUser = userService.createUser(userMapper.toEntity(userDto));
+        return ResponseEntity.ok().body(addedUser);
     }
 
 }
