@@ -42,4 +42,13 @@ class UserController {
         return ResponseEntity.ok().body(addedUser);
     }
 
+    @DeleteMapping("/user/{id}")
+    public ResponseEntity<Optional<User>> deleteUser(@PathVariable("id") final Long id) {
+        Optional<User> userToDelete = userService.getUser(id);
+        if (userToDelete.isPresent()) {
+            userService.deleteUser(userToDelete.get());
+        }
+        return ResponseEntity.ok().body(userToDelete);
+    }
+
 }
