@@ -34,6 +34,12 @@ class UserServiceImpl implements UserService, UserProvider {
     }
 
     @Override
+    public List<User> findUserByEmailFragment(String emailFragment) {
+        log.info("Looking for user with email fragment of {}", emailFragment);
+        return userRepository.findUserIdsAndEmailsByEmailFragment(emailFragment);
+    }
+
+    @Override
     public Optional<User> getUser(final Long userId) {
         return userRepository.findById(userId);
     }

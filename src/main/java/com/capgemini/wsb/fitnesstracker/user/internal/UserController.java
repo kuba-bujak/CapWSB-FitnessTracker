@@ -20,6 +20,8 @@ class UserController {
 
     private final BasicUserMapper basicUserMapper;
 
+    private final UserEmailMapper userEmailMapper;
+
     @GetMapping
     public ResponseEntity<List<BasicUserDto>> getAllUsers() {
         List<BasicUserDto> users = userService.findAllUsers().stream()
@@ -50,6 +52,12 @@ class UserController {
         } else {
             return ResponseEntity.notFound().build();
         }
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<List<UserEmailDto>> findUserByEmailFragment(@RequestParam String emailFragment){
+        List<UserEmailDto> users = userService.findUserByEmailFragment(emailFragment).stream().map(userEmailMapper::toDto).toList();
+        return ResponseEntity.ok().body(users);
     }
 
 }
