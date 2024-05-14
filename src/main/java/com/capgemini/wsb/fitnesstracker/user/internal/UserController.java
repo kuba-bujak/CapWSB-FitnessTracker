@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,10 +32,13 @@ class UserController {
     }
 
     @GetMapping("/user/{id}")
-    public ResponseEntity<User> getUserById(@PathVariable("id") final Long id) {
+    public ResponseEntity<UserDto> getUserById(@PathVariable("id") final Long id) {
         Optional<User> user = userService.getUser(id);
-        return user.map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.notFound().build());
+        if (user.isPresent()) {
+            return ResponseEntity.ok().body(userMapper.toDto(user.get()));
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @PostMapping
@@ -60,10 +64,41 @@ class UserController {
         return ResponseEntity.ok().body(users);
     }
 
-    @GetMapping("search/age")
+    @GetMapping("/search/age")
     public ResponseEntity<List<UserDto>> findUsersOlderThan(@RequestParam int age) {
         List<UserDto> users = userService.findUsersOlderThan(age).stream().map(userMapper::toDto).toList();
         return ResponseEntity.ok().body(users);
+    }
+
+    @PatchMapping("/user/{id}")
+    public ResponseEntity<UserDto> updateUser(
+            @PathVariable Long id,
+            @RequestParam String fieldName,
+            @RequestParam String fieldValue
+    ) {
+        Optional<User> optionalUser = userService.getUser(id);
+        if (optionalUser.isPresent()) {
+            User user = optionalUser.get();
+
+            switch (fieldName) {
+                case "firstName":
+                    user.setFirstName(fieldValue);
+                    break;
+                case "lastName":
+                    user.setLastName(fieldValue);
+                    break;
+                case "email":
+                    user.setEmail(fieldValue);
+                    break;
+                default:
+                    return ResponseEntity.badRequest().build();
+            }
+
+            User updatedUser = userService.updateUser(user);
+            return ResponseEntity.ok().body(userMapper.toDto(updatedUser));
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
 }
