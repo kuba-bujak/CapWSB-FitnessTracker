@@ -94,7 +94,7 @@ class UserController {
                     return ResponseEntity.badRequest().build();
             }
 
-            User updatedUser = userService.updateUser(user);
+            User updatedUser = userService.updateUser(id, user);
             return ResponseEntity.ok().body(userMapper.toDto(updatedUser));
         } else {
             return ResponseEntity.notFound().build();
