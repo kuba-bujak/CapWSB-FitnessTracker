@@ -54,9 +54,15 @@ class UserController {
         }
     }
 
-    @GetMapping("/search")
+    @GetMapping("/search/email")
     public ResponseEntity<List<UserEmailDto>> findUserByEmailFragment(@RequestParam String emailFragment){
         List<UserEmailDto> users = userService.findUserByEmailFragment(emailFragment).stream().map(userEmailMapper::toDto).toList();
+        return ResponseEntity.ok().body(users);
+    }
+
+    @GetMapping("search/age")
+    public ResponseEntity<List<UserDto>> findUsersOlderThan(@RequestParam int age) {
+        List<UserDto> users = userService.findUsersOlderThan(age).stream().map(userMapper::toDto).toList();
         return ResponseEntity.ok().body(users);
     }
 

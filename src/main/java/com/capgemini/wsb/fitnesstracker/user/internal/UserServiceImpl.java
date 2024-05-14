@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -37,6 +38,13 @@ class UserServiceImpl implements UserService, UserProvider {
     public List<User> findUserByEmailFragment(String emailFragment) {
         log.info("Looking for user with email fragment of {}", emailFragment);
         return userRepository.findUserIdsAndEmailsByEmailFragment(emailFragment);
+    }
+
+    @Override
+    public List<User> findUsersOlderThan(int age) {
+        log.info("Looking for users older than {}", age);
+        LocalDate maxBirthdate = LocalDate.now().minusYears(age);
+        return userRepository.findUsersOlderThan(maxBirthdate);
     }
 
     @Override
