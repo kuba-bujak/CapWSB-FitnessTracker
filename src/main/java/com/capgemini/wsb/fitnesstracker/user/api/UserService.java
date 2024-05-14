@@ -17,6 +17,6 @@ public interface UserService {
 
     List<User> findUsersOlderThan(int age);
 
-    User updateUser(Long id, User user);
+    User updateUser(User user);
 
 }
