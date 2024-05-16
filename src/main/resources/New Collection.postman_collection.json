@@ -1,0 +1,343 @@
+{
+	"info": {
+		"_postman_id": "2a6c9d09-5c4f-403e-8253-a2c786eec2a7",
+		"name": "New Collection",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "21428039"
+	},
+	"item": [
+		{
+			"name": "getAllUsers",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "id",
+						"value": "1",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "localhost:8080/v1/users",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"users"
+					],
+					"query": [
+						{
+							"key": "emailFragment",
+							"value": "Emma",
+							"disabled": true
+						},
+						{
+							"key": "age",
+							"value": "40",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getUserById",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "id",
+						"value": "1",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "localhost:8080/v1/users/user/1",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"users",
+						"user",
+						"1"
+					],
+					"query": [
+						{
+							"key": "emailFragment",
+							"value": "Emma",
+							"disabled": true
+						},
+						{
+							"key": "age",
+							"value": "40",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "createUser",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "id",
+						"value": "1",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"firstName\": \"Kuba\",\r\n  \"lastName\": \"sadsad\",\r\n  \"birthdate\": \"1993-05-14\",\r\n  \"email\": \"emma.dose@exsample.com\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/v1/users",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"users"
+					],
+					"query": [
+						{
+							"key": "emailFragment",
+							"value": "Emma",
+							"disabled": true
+						},
+						{
+							"key": "age",
+							"value": "40",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "deleteUser",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "id",
+						"value": "1",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"firstName\": \"Kuba\",\r\n  \"lastName\": \"sadsad\",\r\n  \"birthdate\": \"1993-05-14\",\r\n  \"email\": \"emma.dose@exsample.com\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/v1/users/user/11",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"users",
+						"user",
+						"11"
+					],
+					"query": [
+						{
+							"key": "emailFragment",
+							"value": "Emma",
+							"disabled": true
+						},
+						{
+							"key": "age",
+							"value": "40",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "findUserByEmailFragment",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "id",
+						"value": "1",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"firstName\": \"Kuba\",\r\n  \"lastName\": \"sadsad\",\r\n  \"birthdate\": \"1993-05-14\",\r\n  \"email\": \"emma.dose@exsample.com\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/v1/users/search/email?emailFragment=Emma",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"users",
+						"search",
+						"email"
+					],
+					"query": [
+						{
+							"key": "emailFragment",
+							"value": "Emma"
+						},
+						{
+							"key": "age",
+							"value": "40",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "findUsersOlderThan",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "id",
+						"value": "1",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"firstName\": \"Kuba\",\r\n  \"lastName\": \"sadsad\",\r\n  \"birthdate\": \"1993-05-14\",\r\n  \"email\": \"emma.dose@exsample.com\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/v1/users/search/age?age=40",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"users",
+						"search",
+						"age"
+					],
+					"query": [
+						{
+							"key": "emailFragment",
+							"value": "Emma",
+							"disabled": true
+						},
+						{
+							"key": "age",
+							"value": "40"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "updateUser",
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "id",
+						"value": "1",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"firstName\": \"Kuba\",\r\n  \"lastName\": \"sadsad\",\r\n  \"birthdate\": \"1993-05-14\",\r\n  \"email\": \"emma.dose@exsample.com\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/v1/users/user/1?fieldName=firstName&fieldValue=Jakub",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"users",
+						"user",
+						"1"
+					],
+					"query": [
+						{
+							"key": "emailFragment",
+							"value": "Emma",
+							"disabled": true
+						},
+						{
+							"key": "age",
+							"value": "40",
+							"disabled": true
+						},
+						{
+							"key": "fieldName",
+							"value": "firstName"
+						},
+						{
+							"key": "fieldValue",
+							"value": "Jakub"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
