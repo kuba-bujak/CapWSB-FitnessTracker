@@ -2,19 +2,20 @@ package com.capgemini.wsb.fitnesstracker.user.internal;
 
 import com.capgemini.wsb.FitnessTracker;
 import com.capgemini.wsb.fitnesstracker.user.api.User;
-import org.junit.jupiter.api.Test;
+import com.capgemini.wsb.fitnesstracker.user.api.UserNotFoundException;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
-
+import org.junit.Test;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
 import static org.junit.Assert.*;
-
+@RunWith(SpringRunner.class)
 @SpringBootTest(classes = FitnessTracker.class)
 @Transactional
 public class UserServiceImplTest {
@@ -43,6 +44,18 @@ public class UserServiceImplTest {
         assertEquals(userDto.email(), createdUser.getEmail());
     }
 
+    @Test(expected = DataIntegrityViolationException.class)
+    @Transactional
+    public void shouldThrowExceptionWhenCreateUserWithExistingEmail() {
+        // given
+        UserDto userDto = new UserDto(1L, "John", "Nowak", LocalDate.of(1999,12,12), "john.nowak@gmail.com");
+        UserDto userDto2 = new UserDto(1L, "Anna", "Nowak", LocalDate.of(1999,12,12), "john.nowak@gmail.com");
+
+        // when
+        userService.createUser(userMapper.toEntity(userDto));
+        userService.createUser(userMapper.toEntity(userDto2));
+    }
+
     @Test
     @Transactional
     public void shouldDeleteUser() {
@@ -61,6 +74,20 @@ public class UserServiceImplTest {
         assertFalse(userService.getUser(createdUser.getId()).isPresent());
         assertEquals(createdUser.getId(), deletedUser.getId());
         assertEquals(usersListSizeBeforeDelete - 1, userService.findAllUsers().size());
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    @Transactional
+    public void shouldNotDeleteNonExistingUser() {
+        // given
+        Long nonExistingUserId = 999L;
+        int usersListSizeBeforeDelete = userService.findAllUsers().size();
+
+        // when
+        Optional<User> userToDelete = userService.getUser(nonExistingUserId);
+        assertFalse(userToDelete.isPresent());
+
+        User deletedUser = userService.deleteUser(userToDelete.orElse(null));
     }
 
     @Test
@@ -87,6 +114,32 @@ public class UserServiceImplTest {
         assertEquals(createdUser2, usersWithEmailFragment.get(1));
     }
 
+    @Test()
+    @Transactional
+    public void shouldReturnEmptyListWhenEmailFragmentIsNull() {
+        // given
+        String emailFragment = null;
+
+        // when
+        List<User> users = userService.findUserByEmailFragment(emailFragment);
+
+        // then
+        assertTrue(users.isEmpty());
+    }
+
+    @Test
+    @Transactional
+    public void shouldReturnEmptyListWhenEmailFragmentIsEmpty() {
+        // given
+        String emailFragment = "";
+
+        // when
+        List<User> users = userService.findUserByEmailFragment(emailFragment);
+
+        // then
+        assertTrue(users.isEmpty());
+    }
+
     @Test
     @Transactional
     public void shouldFindUsersOlderThan() {
@@ -104,6 +157,34 @@ public class UserServiceImplTest {
         // then
         assertEquals(initialUsersOlderThan.size() + 2, usersOlderThan.size());
         assertEquals(createdUser2, usersOlderThan.get(3));
+    }
+
+    @Test
+    @Transactional
+    public void shouldReturnEmptyListWhenNoUsersOlderThanGivenAge() {
+        // given
+        int age = 150;
+
+        // when
+        List<User> users = userService.findUsersOlderThan(age);
+
+        // then
+        assertTrue(users.isEmpty());
+    }
+
+    @Test
+    @Transactional
+    public void shouldReturnFullListOfUsersWhenAgeIsSetTo0() {
+        // given
+        int age = 0;
+
+        // when
+        List<User> users = userService.findUsersOlderThan(age);
+        List<User> allUsers = userService.findAllUsers();
+
+        // then
+        assertFalse(users.isEmpty());
+        assertEquals(allUsers.size(), users.size());
     }
 
 //    @Test
@@ -145,7 +226,7 @@ public class UserServiceImplTest {
 
         // when
         User createdUser = userService.createUser(userMapper.toEntity(userToCreate));
-        Optional<User> foundUser = userService.getUser(userId);
+        Optional<User> foundUser = userService.getUser(createdUser.getId());
 
         // then
         assertNotNull(foundUser.isPresent());
@@ -153,6 +234,17 @@ public class UserServiceImplTest {
         assertEquals(createdUser.getLastName(), foundUser.get().getLastName());
         assertEquals(createdUser.getBirthdate(), foundUser.get().getBirthdate());
         assertEquals(createdUser.getEmail(), foundUser.get().getEmail());
+
+    }
+
+    @Test(expected = UserNotFoundException.class)
+    @Transactional
+    public void shouldNotFindUserWithWrongId() {
+        // given
+        Long userId = 36276387216L;
+
+        // when
+        Optional<User> foundUser = userService.getUser(userId);
 
     }
 }

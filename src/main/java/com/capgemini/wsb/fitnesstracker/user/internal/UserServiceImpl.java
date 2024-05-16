@@ -1,6 +1,7 @@
 package com.capgemini.wsb.fitnesstracker.user.internal;
 
 import com.capgemini.wsb.fitnesstracker.user.api.User;
+import com.capgemini.wsb.fitnesstracker.user.api.UserNotFoundException;
 import com.capgemini.wsb.fitnesstracker.user.api.UserProvider;
 import com.capgemini.wsb.fitnesstracker.user.api.UserService;
 import lombok.RequiredArgsConstructor;
@@ -29,9 +30,13 @@ class UserServiceImpl implements UserService, UserProvider {
 
     @Override
     public User deleteUser(final User user) {
-        log.info("Deleting user {}", user);
-        userRepository.delete(user);
-        return user;
+        if (user != null) {
+            log.info("Deleting user {}", user);
+            userRepository.delete(user);
+            return user;
+        } else {
+            throw new IllegalArgumentException("User cannot be null");
+        }
     }
 
     @Override
@@ -49,12 +54,25 @@ class UserServiceImpl implements UserService, UserProvider {
 
     @Override
     public User updateUser(User user) {
-        return userRepository.save(user);
+        User userToUpdate = userRepository.findById(user.getId())
+                .orElseThrow(() -> new IllegalArgumentException("User not found with ID: " + user.getId()));
+
+        // Update the user fields
+        userToUpdate.setFirstName(user.getFirstName());
+        userToUpdate.setLastName(user.getLastName());
+        userToUpdate.setBirthdate(user.getBirthdate());
+        userToUpdate.setEmail(user.getEmail());
+
+        return userRepository.save(userToUpdate);
     }
 
     @Override
     public Optional<User> getUser(final Long userId) {
-        return userRepository.findById(userId);
+        Optional<User> foundUser = userRepository.findById(userId);
+        if (foundUser.isEmpty()) {
+            throw new UserNotFoundException(userId);
+        }
+        return foundUser;
     }
 
     @Override
