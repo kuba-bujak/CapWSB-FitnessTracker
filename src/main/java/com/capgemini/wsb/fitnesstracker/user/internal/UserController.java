@@ -23,6 +23,11 @@ class UserController {
 
     private final UserEmailMapper userEmailMapper;
 
+    /**
+     * Retrieves all users.
+     *
+     * @return ResponseEntity containing a list of BasicUserDto objects.
+     */
     @GetMapping
     public ResponseEntity<List<BasicUserDto>> getAllUsers() {
         List<BasicUserDto> users = userService.findAllUsers().stream()
@@ -31,6 +36,12 @@ class UserController {
         return ResponseEntity.ok(users);
     }
 
+    /**
+     * Retrieves a user by ID.
+     *
+     * @param id The ID of the user to retrieve.
+     * @return ResponseEntity containing a UserDto if the user is found, or ResponseEntity.notFound() if not found.
+     */
     @GetMapping("/user/{id}")
     public ResponseEntity<UserDto> getUserById(@PathVariable("id") final Long id) {
         Optional<User> user = userService.getUser(id);
@@ -41,12 +52,24 @@ class UserController {
         }
     }
 
+    /**
+     * Adds a new user.
+     *
+     * @param userDto The DTO representing the user to be added.
+     * @return ResponseEntity containing the added user and status code 201 (Created).
+     */
     @PostMapping
     public ResponseEntity<User> addUser(@RequestBody UserDto userDto) {
         User addedUser = userService.createUser(userMapper.toEntity(userDto));
         return ResponseEntity.status(HttpStatus.CREATED).body(addedUser);
     }
 
+    /**
+     * Deletes a user by ID.
+     *
+     * @param id The ID of the user to delete.
+     * @return ResponseEntity containing the status code 204 (No Content) if successful, or ResponseEntity.notFound() if the user is not found.
+     */
     @DeleteMapping("/user/{id}")
     public ResponseEntity<Optional<User>> deleteUser(@PathVariable("id") final Long id) {
         Optional<User> userToDelete = userService.getUser(id);
@@ -58,18 +81,38 @@ class UserController {
         }
     }
 
+    /**
+     * Finds users by email fragment.
+     *
+     * @param emailFragment The fragment of the email address to search for.
+     * @return ResponseEntity containing a list of UserEmailDto objects.
+     */
     @GetMapping("/search/email")
     public ResponseEntity<List<UserEmailDto>> findUserByEmailFragment(@RequestParam String emailFragment){
         List<UserEmailDto> users = userService.findUserByEmailFragment(emailFragment).stream().map(userEmailMapper::toDto).toList();
         return ResponseEntity.ok().body(users);
     }
 
+    /**
+     * Finds users older than a specified age.
+     *
+     * @param age The age threshold.
+     * @return ResponseEntity containing a list of UserDto objects.
+     */
     @GetMapping("/search/age")
     public ResponseEntity<List<UserDto>> findUsersOlderThan(@RequestParam int age) {
         List<UserDto> users = userService.findUsersOlderThan(age).stream().map(userMapper::toDto).toList();
         return ResponseEntity.ok().body(users);
     }
 
+    /**
+     * Updates a user's information.
+     *
+     * @param id         The ID of the user to update.
+     * @param fieldName  The name of the field to update.
+     * @param fieldValue The new value of the field.
+     * @return ResponseEntity containing the updated UserDto if successful, or ResponseEntity.notFound() if the user is not found.
+     */
     @PatchMapping("/user/{id}")
     public ResponseEntity<UserDto> updateUser(
             @PathVariable Long id,

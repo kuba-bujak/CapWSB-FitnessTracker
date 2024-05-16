@@ -19,6 +19,13 @@ class UserServiceImpl implements UserService, UserProvider {
 
     private final UserRepository userRepository;
 
+    /**
+     * Creates a new user.
+     *
+     * @param user The user to create.
+     * @return The created user.
+     * @throws IllegalArgumentException If the user ID is not null.
+     */
     @Override
     public User createUser(final User user) {
         log.info("Creating User {}", user);
@@ -28,6 +35,13 @@ class UserServiceImpl implements UserService, UserProvider {
         return userRepository.save(user);
     }
 
+    /**
+     * Deletes an existing user.
+     *
+     * @param user The user to delete.
+     * @return The deleted user.
+     * @throws IllegalArgumentException If the user is null.
+     */
     @Override
     public User deleteUser(final User user) {
         if (user != null) {
@@ -39,12 +53,24 @@ class UserServiceImpl implements UserService, UserProvider {
         }
     }
 
+    /**
+     * Finds users by email fragment.
+     *
+     * @param emailFragment The fragment of the email address to search for.
+     * @return The list of users matching the email fragment.
+     */
     @Override
     public List<User> findUserByEmailFragment(String emailFragment) {
         log.info("Looking for user with email fragment of {}", emailFragment);
         return userRepository.findUserIdsAndEmailsByEmailFragment(emailFragment);
     }
 
+    /**
+     * Finds users older than a specified age.
+     *
+     * @param age The age threshold.
+     * @return The list of users older than the specified age.
+     */
     @Override
     public List<User> findUsersOlderThan(int age) {
         log.info("Looking for users older than {}", age);
@@ -52,6 +78,13 @@ class UserServiceImpl implements UserService, UserProvider {
         return userRepository.findUsersOlderThan(maxBirthdate);
     }
 
+    /**
+     * Updates an existing user.
+     *
+     * @param user The user with updated information.
+     * @return The updated user.
+     * @throws IllegalArgumentException If the user does not exist.
+     */
     @Override
     public User updateUser(User user) {
         User userToUpdate = userRepository.findById(user.getId())
@@ -66,6 +99,13 @@ class UserServiceImpl implements UserService, UserProvider {
         return userRepository.save(userToUpdate);
     }
 
+    /**
+     * Retrieves a user by ID.
+     *
+     * @param userId The ID of the user to retrieve.
+     * @return An Optional containing the user, if found.
+     * @throws UserNotFoundException If no user is found with the specified ID.
+     */
     @Override
     public Optional<User> getUser(final Long userId) {
         Optional<User> foundUser = userRepository.findById(userId);
@@ -75,11 +115,22 @@ class UserServiceImpl implements UserService, UserProvider {
         return foundUser;
     }
 
+    /**
+     * Retrieves a user by email address.
+     *
+     * @param email The email address of the user to retrieve.
+     * @return An Optional containing the user, if found.
+     */
     @Override
     public Optional<User> getUserByEmail(final String email) {
         return userRepository.findByEmail(email);
     }
 
+    /**
+     * Retrieves all users.
+     *
+     * @return The list of all users.
+     */
     @Override
     public List<User> findAllUsers() {
         return userRepository.findAll();

@@ -15,6 +15,11 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.Assert.*;
+
+/**
+ * Unit tests for the UserService implementation.
+ * Tests the behavior of methods available in the user service.
+ */
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = FitnessTracker.class)
 @Transactional
@@ -26,6 +31,10 @@ public class UserServiceImplTest {
     @Autowired
     private UserMapper userMapper;
 
+    /**
+     * Test to check creating a new user.
+     * Creates a user using the user service and checks if the user is successfully added.
+     */
     @Test
     @Transactional
     public void shouldCreateNewUser() {
@@ -44,6 +53,9 @@ public class UserServiceImplTest {
         assertEquals(userDto.email(), createdUser.getEmail());
     }
 
+    /**
+     * Test to check if an exception is thrown when creating a user with an existing email.
+     */
     @Test(expected = DataIntegrityViolationException.class)
     @Transactional
     public void shouldThrowExceptionWhenCreateUserWithExistingEmail() {
@@ -56,6 +68,10 @@ public class UserServiceImplTest {
         userService.createUser(userMapper.toEntity(userDto2));
     }
 
+    /**
+     * Test to check user deletion.
+     * Creates a user, deletes it using the user service, and checks if the user is successfully deleted.
+     */
     @Test
     @Transactional
     public void shouldDeleteUser() {
@@ -76,6 +92,9 @@ public class UserServiceImplTest {
         assertEquals(usersListSizeBeforeDelete - 1, userService.findAllUsers().size());
     }
 
+    /**
+     * Test to check if an exception is thrown when trying to delete a non-existing user.
+     */
     @Test(expected = IllegalArgumentException.class)
     @Transactional
     public void shouldNotDeleteNonExistingUser() {
@@ -90,6 +109,10 @@ public class UserServiceImplTest {
         User deletedUser = userService.deleteUser(userToDelete.orElse(null));
     }
 
+    /**
+     * Test to find users by email fragment.
+     * Checks if users are correctly found based on the email fragment.
+     */
     @Test
     @Transactional
     public void shouldFindUsersByEmailFragment() {
@@ -114,6 +137,9 @@ public class UserServiceImplTest {
         assertEquals(createdUser2, usersWithEmailFragment.get(1));
     }
 
+    /**
+     * Test to check if an empty list is returned when the email fragment is null.
+     */
     @Test()
     @Transactional
     public void shouldReturnEmptyListWhenEmailFragmentIsNull() {
@@ -127,6 +153,9 @@ public class UserServiceImplTest {
         assertTrue(users.isEmpty());
     }
 
+    /**
+     * Test to check if an empty list is returned when the email fragment is empty.
+     */
     @Test
     @Transactional
     public void shouldReturnEmptyListWhenEmailFragmentIsEmpty() {
@@ -140,6 +169,10 @@ public class UserServiceImplTest {
         assertTrue(users.isEmpty());
     }
 
+    /**
+     * Test to find users older than a specified age.
+     * Checks if users are correctly found based on age.
+     */
     @Test
     @Transactional
     public void shouldFindUsersOlderThan() {
@@ -159,6 +192,9 @@ public class UserServiceImplTest {
         assertEquals(createdUser2, usersOlderThan.get(3));
     }
 
+    /**
+     * Test to check if an empty list is returned when no users are older than the given age.
+     */
     @Test
     @Transactional
     public void shouldReturnEmptyListWhenNoUsersOlderThanGivenAge() {
@@ -172,6 +208,9 @@ public class UserServiceImplTest {
         assertTrue(users.isEmpty());
     }
 
+    /**
+     * Test to check if a full list of users is returned when age is set to 0.
+     */
     @Test
     @Transactional
     public void shouldReturnFullListOfUsersWhenAgeIsSetTo0() {
@@ -217,6 +256,10 @@ public class UserServiceImplTest {
 //
 //    }
 
+    /**
+     * Test to find a user by ID.
+     * Checks if a user is correctly found based on the ID.
+     */
     @Test
     @Transactional
     public void shouldFindUserById() {
@@ -237,6 +280,9 @@ public class UserServiceImplTest {
 
     }
 
+    /**
+     * Test to check if an exception is thrown when trying to find a user with an incorrect ID.
+     */
     @Test(expected = UserNotFoundException.class)
     @Transactional
     public void shouldNotFindUserWithWrongId() {
