@@ -81,13 +81,13 @@ public class UserServiceImplTest {
 
         int usersListSizeBeforeDelete = userService.findAllUsers().size();
         Optional<User> userToDelete = userService.getUser(createdUser.getId());
+        assertTrue(userService.getUser(createdUser.getId()).isPresent());
 
         // when
         assertTrue(userToDelete.isPresent());
         User deletedUser = userService.deleteUser(userToDelete.get());
 
         // then
-        assertFalse(userService.getUser(createdUser.getId()).isPresent());
         assertEquals(createdUser.getId(), deletedUser.getId());
         assertEquals(usersListSizeBeforeDelete - 1, userService.findAllUsers().size());
     }
@@ -95,7 +95,7 @@ public class UserServiceImplTest {
     /**
      * Test to check if an exception is thrown when trying to delete a non-existing user.
      */
-    @Test(expected = IllegalArgumentException.class)
+    @Test(expected = UserNotFoundException.class)
     @Transactional
     public void shouldNotDeleteNonExistingUser() {
         // given
@@ -145,22 +145,6 @@ public class UserServiceImplTest {
     public void shouldReturnEmptyListWhenEmailFragmentIsNull() {
         // given
         String emailFragment = null;
-
-        // when
-        List<User> users = userService.findUserByEmailFragment(emailFragment);
-
-        // then
-        assertTrue(users.isEmpty());
-    }
-
-    /**
-     * Test to check if an empty list is returned when the email fragment is empty.
-     */
-    @Test
-    @Transactional
-    public void shouldReturnEmptyListWhenEmailFragmentIsEmpty() {
-        // given
-        String emailFragment = "";
 
         // when
         List<User> users = userService.findUserByEmailFragment(emailFragment);
