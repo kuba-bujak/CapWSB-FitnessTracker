@@ -44,4 +44,9 @@ class TrainingServiceImpl implements TrainingProvider {
         }
     }
 
+    @Override
+    public List<Training> getTrainingsEqualsToActivityType(ActivityType activityType) {
+        return trainingRepository.findByActivityType(activityType).stream().toList();
+    }
+
 }

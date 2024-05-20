@@ -31,4 +31,9 @@ class TrainingController {
     public List<TrainingTO> getTrainingsAfterDate(@RequestParam("endDate") String endDate) {
         return trainingService.getCompletedTrainings(endDate).stream().map(trainingMapper::toTraining).toList();
     }
+
+    @GetMapping("/activity")
+    public List<TrainingTO> getTrainingsByActivityEqual(@RequestParam("activityType") ActivityType activityType) {
+        return trainingService.getTrainingsEqualsToActivityType(activityType).stream().map(trainingMapper::toTraining).toList();
+    }
 }
