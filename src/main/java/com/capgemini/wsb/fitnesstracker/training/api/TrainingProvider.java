@@ -23,4 +23,6 @@ public interface TrainingProvider {
 
     List<Training> getCompletedTrainings(String date);
 
+    Training createTraining(Training training);
+
 }

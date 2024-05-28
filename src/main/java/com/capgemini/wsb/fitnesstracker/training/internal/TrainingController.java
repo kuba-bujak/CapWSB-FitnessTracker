@@ -1,5 +1,6 @@
 package com.capgemini.wsb.fitnesstracker.training.internal;
 
+import com.capgemini.wsb.fitnesstracker.training.api.Training;
 import com.capgemini.wsb.fitnesstracker.training.api.TrainingProvider;
 import com.capgemini.wsb.fitnesstracker.training.api.TrainingTO;
 import lombok.RequiredArgsConstructor;
@@ -37,5 +38,11 @@ class TrainingController {
     public List<TrainingTO> getTrainingsByActivityType(@RequestParam("activityType") ActivityType activityType) {
         List<TrainingTO> allTrainings = trainingService.getTrainings().stream().map(trainingMapper::toTraining).toList();
         return allTrainings.stream().filter(training -> training.getActivityType() == activityType).collect(Collectors.toList());
+    }
+
+    @PostMapping
+    public TrainingTO createTraining(@RequestBody TrainingTO trainingTO) {
+        Training createdTraining = trainingService.createTraining(trainingMapper.toEntity(trainingTO));
+        return trainingMapper.toTraining(createdTraining);
     }
 }

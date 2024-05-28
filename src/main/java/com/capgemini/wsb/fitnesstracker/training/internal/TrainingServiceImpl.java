@@ -4,6 +4,7 @@ import com.capgemini.wsb.fitnesstracker.training.api.Training;
 import com.capgemini.wsb.fitnesstracker.training.api.TrainingProvider;
 import com.capgemini.wsb.fitnesstracker.user.api.User;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
@@ -15,6 +16,7 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 class TrainingServiceImpl implements TrainingProvider {
 
     private final TrainingRepository trainingRepository;
@@ -42,6 +44,15 @@ class TrainingServiceImpl implements TrainingProvider {
         } catch (ParseException e) {
             throw new RuntimeException("Invalid date format", e);
         }
+    }
+
+    @Override
+    public Training createTraining(final Training training) {
+        log.info("Creating training {}", training);
+        if (training.getId() != null) {
+            throw new IllegalArgumentException("Training has already DB ID, update is not permitted!");
+        }
+        return trainingRepository.save(training);
     }
 
 }
