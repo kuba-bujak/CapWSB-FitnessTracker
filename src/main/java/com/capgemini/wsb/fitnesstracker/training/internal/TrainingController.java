@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("v1/trainings")
@@ -30,5 +31,11 @@ class TrainingController {
     @GetMapping("/completed")
     public List<TrainingTO> getTrainingsAfterDate(@RequestParam("endDate") String endDate) {
         return trainingService.getCompletedTrainings(endDate).stream().map(trainingMapper::toTraining).toList();
+    }
+
+    @GetMapping("/activity")
+    public List<TrainingTO> getTrainingsByActivityType(@RequestParam("activityType") ActivityType activityType) {
+        List<TrainingTO> allTrainings = trainingService.getTrainings().stream().map(trainingMapper::toTraining).toList();
+        return allTrainings.stream().filter(training -> training.getActivityType() == activityType).collect(Collectors.toList());
     }
 }
