@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.DateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -60,5 +61,54 @@ class TrainingController {
             return trainingMapper.toTraining(createdTraining);
         }
         throw new UserNotFoundException(trainingWithUserIdTO.getUserId());
+    }
+
+    @PatchMapping("/training/{id}")
+    public TrainingTO updateTraining(@PathVariable Long id,
+                                     @RequestParam String fieldName,
+                                     @RequestParam String fieldValue) {
+        Optional<Training> training = trainingService.getTraining(id);
+        if (training.isPresent()) {
+            TrainingTO trainingToUpdate = trainingMapper.toTraining(training.get());
+
+            switch (fieldName) {
+                case "startTime" :
+                    trainingToUpdate.setStartTime(new Date(fieldValue));
+                    break;
+
+                case "endTime":
+                    trainingToUpdate.setEndTime(new Date(fieldValue));
+                    break;
+
+                case "activityType":
+                    try {
+                        ActivityType activityType = ActivityType.valueOf(fieldValue.toUpperCase());
+                        trainingToUpdate.setActivityType(activityType);
+                    } catch (IllegalArgumentException e) {
+                        System.out.println("Nieprawidłowa wartość activityType: " + fieldValue);
+                    }
+                    break;
+
+                case "distance":
+                    double distance = Double.parseDouble(fieldValue);
+                    trainingToUpdate.setDistance(distance);
+                    break;
+
+                case "averageSpeed":
+                    double averageSpeed = Double.parseDouble(fieldValue);
+                    trainingToUpdate.setAverageSpeed(averageSpeed);
+                    break;
+
+                default:
+                    System.out.println("Nieznane pole: " + fieldName);
+                    break;
+
+            }
+            Training updatedTraining = trainingService.updateTraining(trainingToUpdate);
+            return trainingMapper.toTraining(updatedTraining);
+        }
+
+        throw new RuntimeException("Training was not found");
+
     }
 }

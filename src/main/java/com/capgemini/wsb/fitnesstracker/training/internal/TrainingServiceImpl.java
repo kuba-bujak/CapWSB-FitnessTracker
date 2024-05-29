@@ -3,14 +3,13 @@ package com.capgemini.wsb.fitnesstracker.training.internal;
 import com.capgemini.wsb.fitnesstracker.training.api.Training;
 import com.capgemini.wsb.fitnesstracker.training.api.TrainingProvider;
 import com.capgemini.wsb.fitnesstracker.training.api.TrainingService;
-import com.capgemini.wsb.fitnesstracker.user.api.User;
+import com.capgemini.wsb.fitnesstracker.training.api.TrainingTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -23,8 +22,8 @@ class TrainingServiceImpl implements TrainingProvider, TrainingService {
     private final TrainingRepository trainingRepository;
 
     @Override
-    public Optional<User> getTraining(final Long trainingId) {
-        throw new UnsupportedOperationException("Not finished yet");
+    public Optional<Training> getTraining(final Long trainingId) {
+        return trainingRepository.findById(trainingId);
     }
 
     @Override
@@ -59,5 +58,23 @@ class TrainingServiceImpl implements TrainingProvider, TrainingService {
             throw new IllegalArgumentException("Training has already DB ID, update is not permitted!");
         }
         return trainingRepository.save(training);
+    }
+
+    @Override
+    public Training updateTraining(TrainingTO training) {
+        Optional<Training> foundTraining = trainingRepository.findById(training.getId());
+
+        if (foundTraining.isPresent()) {
+            Training trainingToUpdate = foundTraining.get();
+
+            trainingToUpdate.setActivityType(training.getActivityType());
+            trainingToUpdate.setDistance(training.getDistance());
+            trainingToUpdate.setAverageSpeed(training.getAverageSpeed());
+            trainingToUpdate.setStartTime(training.getStartTime());
+            trainingToUpdate.setEndTime(training.getEndTime());
+
+            return trainingRepository.save(trainingToUpdate);
+        }
+        throw new RuntimeException("Training was not found");
     }
 }
