@@ -22,4 +22,15 @@ class TrainingMapper {
                 training.getDistance(),
                 training.getAverageSpeed());
     }
+
+    Training toEntity(TrainingTO trainingTO) {
+        return new Training(
+                userMapper.toEntity(trainingTO.getUser()),
+                trainingTO.getStartTime(),
+                trainingTO.getEndTime(),
+                trainingTO.getActivityType(),
+                trainingTO.getDistance(),
+                trainingTO.getAverageSpeed()
+        );
+    }
 }
