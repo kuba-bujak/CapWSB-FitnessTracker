@@ -1,0 +1,190 @@
+{
+	"info": {
+		"_postman_id": "c8ba7f4c-f938-4ea9-b1f4-fbfea1307f61",
+		"name": "Trainings",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "21428039"
+	},
+	"item": [
+		{
+			"name": "getAllTrainings",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/v1/trainings",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"trainings"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getAllTrainingsByUserId",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/v1/trainings/training/1",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"trainings",
+						"training",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getAllTrainingsByCompletedDate",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/v1/trainings/completed?endDate=2024-01-17",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"trainings",
+						"completed"
+					],
+					"query": [
+						{
+							"key": "endDate",
+							"value": "2024-01-17"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getTrainingsByActivityType",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "id",
+						"value": "1",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"firstName\": \"Kuba\",\r\n  \"lastName\": \"sadsad\",\r\n  \"birthdate\": \"1993-05-14\",\r\n  \"email\": \"emma.dose@exsample.com\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/v1/trainings/activity?activityType=RUNNING",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"trainings",
+						"activity"
+					],
+					"query": [
+						{
+							"key": "emailFragment",
+							"value": "Emma",
+							"disabled": true
+						},
+						{
+							"key": "age",
+							"value": "40",
+							"disabled": true
+						},
+						{
+							"key": "activityType",
+							"value": "RUNNING"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "createTraining",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"userId\": 1,\r\n    \"startTime\": \"2024-05-26T08:30:00Z\",\r\n    \"endTime\": \"2024-05-26T10:00:00Z\",\r\n    \"activityType\": \"RUNNING\",\r\n    \"distance\": 10.5,\r\n    \"averageSpeed\": 5.25\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/v1/trainings",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"trainings"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UpdateTraining",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/v1/trainings/training/1?fieldName=distance&fieldValue=5",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"trainings",
+						"training",
+						"1"
+					],
+					"query": [
+						{
+							"key": "fieldName",
+							"value": "distance"
+						},
+						{
+							"key": "fieldValue",
+							"value": "5"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
