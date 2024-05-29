@@ -16,7 +16,7 @@ Jako użytkownik, chce mieć możliwość dostępu do panelu z treningami:
 
 Stworzone API powinno pozwalać na:
 
-- [ ] utworzenie nowego treningu
+- [x] utworzenie nowego treningu
 - [x] wyszukiwanie wszystkich treningów
 - [x] wyszukiwanie treningów dla określonego Użytkownika:
 - [x] wyszukiwanie wszystkich treningów zakończonych (po konkretnej zdefiniowanej dacie)
