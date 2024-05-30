@@ -1,5 +1,6 @@
 package com.capgemini.wsb.fitnesstracker.statistics.api;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface StatisticsProvider {
@@ -13,4 +14,5 @@ public interface StatisticsProvider {
      */
     Optional<Statistics> getStatistics(Long statisticsId);
 
+    List<StatisticsDto> getAllStatistics();
 }
