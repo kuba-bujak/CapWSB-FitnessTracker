@@ -19,5 +19,5 @@ public interface TrainingService {
      * @param training the training transfer object containing updated information
      * @return the updated training entity
      */
-    Training updateTraining(TrainingTO training);
+    Training updateTraining(Training training);
 }

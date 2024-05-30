@@ -39,6 +39,19 @@ class UserController {
     }
 
     /**
+     * Retrieves all users.
+     *
+     * @return ResponseEntity containing a list of BasicUserDto objects.
+     */
+    @GetMapping("/simple")
+    public ResponseEntity<List<UserDto>> getAllSimpleUsers() {
+        List<UserDto> users = userService.findAllUsers().stream()
+                .map(userMapper::toDto)
+                .toList();
+        return ResponseEntity.ok(users);
+    }
+
+    /**
      * Retrieves a user by ID.
      *
      * @param id The ID of the user to retrieve.
@@ -110,34 +123,22 @@ class UserController {
     /**
      * Updates a user's information.
      *
-     * @param id         The ID of the user to update.
-     * @param fieldName  The name of the field to update.
-     * @param fieldValue The new value of the field.
+     * @param id      The ID of the user to update.
+     * @param userDto The DTO containing the user's updated information.
      * @return ResponseEntity containing the updated UserDto if successful, or ResponseEntity.notFound() if the user is not found.
      */
-    @PatchMapping("/user/{id}")
+    @PutMapping("/{userId}")
     public ResponseEntity<UserDto> updateUser(
-            @PathVariable Long id,
-            @RequestParam String fieldName,
-            @RequestParam String fieldValue
+            @PathVariable("userId") Long id,
+            @RequestBody UserDto userDto
     ) {
         Optional<User> optionalUser = userService.getUser(id);
         if (optionalUser.isPresent()) {
             User user = optionalUser.get();
-
-            switch (fieldName) {
-                case "firstName":
-                    user.setFirstName(fieldValue);
-                    break;
-                case "lastName":
-                    user.setLastName(fieldValue);
-                    break;
-                case "email":
-                    user.setEmail(fieldValue);
-                    break;
-                default:
-                    return ResponseEntity.badRequest().build();
-            }
+            user.setFirstName(userDto.firstName());
+            user.setLastName(userDto.lastName());
+            user.setBirthdate(userDto.birthdate());
+            user.setEmail(userDto.email());
 
             User updatedUser = userService.updateUser(user);
             return ResponseEntity.ok().body(userMapper.toDto(updatedUser));

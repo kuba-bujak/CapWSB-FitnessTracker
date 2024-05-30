@@ -42,8 +42,9 @@ class TrainingMapper {
                 trainingWithUserIdTO.getStartTime(),
                 trainingWithUserIdTO.getEndTime(),
                 trainingWithUserIdTO.getActivityType(),
-                trainingWithUserIdTO.getAverageSpeed(),
-                trainingWithUserIdTO.getDistance()
+                trainingWithUserIdTO.getDistance(),
+                trainingWithUserIdTO.getAverageSpeed()
+
         );
     }
 }

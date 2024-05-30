@@ -67,7 +67,7 @@ class TrainingServiceImpl implements TrainingProvider, TrainingService {
     public List<Training> getCompletedTrainings(String date) {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         try {
-            return trainingRepository.findByEndTimeBefore(sdf.parse(date)).stream().toList();
+            return trainingRepository.findByEndTimeAfter(sdf.parse(date)).stream().toList();
         } catch (ParseException e) {
             throw new RuntimeException("Invalid date format", e);
         }
@@ -103,12 +103,12 @@ class TrainingServiceImpl implements TrainingProvider, TrainingService {
     /**
      * Updates an existing training.
      *
-     * @param training the training transfer object containing updated information
+     * @param training the training entity containing updated information
      * @return the updated training entity
      * @throws RuntimeException if the training was not found
      */
     @Override
-    public Training updateTraining(TrainingTO training) {
+    public Training updateTraining(Training training) {
         Optional<Training> foundTraining = trainingRepository.findById(training.getId());
 
         if (foundTraining.isPresent()) {
@@ -119,6 +119,7 @@ class TrainingServiceImpl implements TrainingProvider, TrainingService {
             trainingToUpdate.setAverageSpeed(training.getAverageSpeed());
             trainingToUpdate.setStartTime(training.getStartTime());
             trainingToUpdate.setEndTime(training.getEndTime());
+            trainingToUpdate.setUser(training.getUser()); // Ensure the user is also updated
 
             return trainingRepository.save(trainingToUpdate);
         }

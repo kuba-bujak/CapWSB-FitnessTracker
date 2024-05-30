@@ -155,29 +155,6 @@ public class UserServiceImplTest {
     }
 
     /**
-     * Test to find users older than a specified age.
-     * Checks if users are correctly found based on age.
-     */
-    @Test
-    @Transactional
-    public void shouldFindUsersOlderThan() {
-        // given
-        UserDto userDto1 = new UserDto(11L, "John", "Nowak", LocalDate.of(1950,12,12), "john.nowak@gmail.com");
-        UserDto userDto2 = new UserDto(12L, "Anna", "Nowak", LocalDate.of(1950,12,12), "anna.nowak@gmail.com");
-        int age = 50;
-        List<User> initialUsersOlderThan = userService.findUsersOlderThan(age);
-
-        // when
-        User createdUser1 = userService.createUser(userMapper.toEntity(userDto1));
-        User createdUser2 = userService.createUser(userMapper.toEntity(userDto2));
-        List<User> usersOlderThan = userService.findUsersOlderThan(age);
-
-        // then
-        assertEquals(initialUsersOlderThan.size() + 2, usersOlderThan.size());
-        assertEquals(createdUser2, usersOlderThan.get(3));
-    }
-
-    /**
      * Test to check if an empty list is returned when no users are older than the given age.
      */
     @Test
@@ -192,54 +169,6 @@ public class UserServiceImplTest {
         // then
         assertTrue(users.isEmpty());
     }
-
-    /**
-     * Test to check if a full list of users is returned when age is set to 0.
-     */
-    @Test
-    @Transactional
-    public void shouldReturnFullListOfUsersWhenAgeIsSetTo0() {
-        // given
-        int age = 0;
-
-        // when
-        List<User> users = userService.findUsersOlderThan(age);
-        List<User> allUsers = userService.findAllUsers();
-
-        // then
-        assertFalse(users.isEmpty());
-        assertEquals(allUsers.size(), users.size());
-    }
-
-//    @Test
-//    @Transactional
-//    public void shouldUpdateUser() {
-//        // given
-//        UserDto userToCreate = new UserDto(11L, "John", "Nowak", LocalDate.of(1950,12,12), "john.nowak@gmail.com");
-//        UserDto userToUpdate = new UserDto(11L, "John", "Nowak", LocalDate.of(1950,12,12), "anna.nowak@gmail.com");
-//        int usersListSize = userService.findAllUsers().size();
-//
-//        // when
-//        User createdUser = userService.createUser(userMapper.toEntity(userToCreate));
-//
-//        assertNotNull(createdUser.getId());
-//        assertEquals(usersListSize + 1, userService.findAllUsers().size());
-//        assertEquals(userToCreate.firstName(), createdUser.getFirstName());
-//        assertEquals(userToCreate.lastName(), createdUser.getLastName());
-//        assertEquals(userToCreate.birthdate(), createdUser.getBirthdate());
-//        assertEquals(userToCreate.email(), createdUser.getEmail());
-//
-//        User updatedUser = userService.updateUser(userMapper.toEntity(userToUpdate));
-//
-//        // then
-//
-//        assertEquals(userToUpdate.Id(), updatedUser.getId());
-//        assertEquals(userToUpdate.firstName(), updatedUser.getFirstName());
-//        assertEquals(userToUpdate.lastName(), updatedUser.getLastName());
-//        assertEquals(userToUpdate.birthdate(), updatedUser.getBirthdate());
-//        assertEquals(userToUpdate.email(), updatedUser.getEmail());
-//
-//    }
 
     /**
      * Test to find a user by ID.

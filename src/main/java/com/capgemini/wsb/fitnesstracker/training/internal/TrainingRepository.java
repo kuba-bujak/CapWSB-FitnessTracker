@@ -13,7 +13,7 @@ interface TrainingRepository extends JpaRepository<Training, Long> {
      * @param endDate the end date to filter completed trainings
      * @return list of completed trainings
      */
-    List<Training> findByEndTimeBefore(Date endDate);
+    List<Training> findByEndTimeAfter(Date endDate);
 
     /**
      * Finds all trainings by activity type.
