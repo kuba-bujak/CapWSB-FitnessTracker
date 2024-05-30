@@ -1,10 +1,8 @@
 package com.capgemini.wsb.fitnesstracker.statistics.internal;
 
-import com.capgemini.wsb.fitnesstracker.statistics.api.StatisticsDto;
+import com.capgemini.wsb.fitnesstracker.statistics.api.Statistics;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -16,9 +14,27 @@ class StatisticsController {
     private final StatisticsServiceImpl statisticsService;
 
     @GetMapping
-    public List<StatisticsDto> getAllStatistics() {
+    public List<Statistics> getAllStatistics() {
         return statisticsService.getAllStatistics();
     }
 
+    @PostMapping
+    public Statistics createStatistics(@RequestBody Statistics statistics) {
+        return statisticsService.createStatictics(statistics);
+    }
 
+    @PutMapping("/{userId}")
+    public Statistics updateStatistics(@PathVariable Long userId, @RequestBody Statistics statistics) {
+        return statisticsService.updateStatistics(userId, statistics);
+    }
+
+    @GetMapping("/user/{userId}")
+    public Statistics getStatisticsByUserId(@PathVariable Long userId) {
+        return statisticsService.getStatisticsByUserId(userId);
+    }
+
+    @DeleteMapping("/{userId}")
+    public void deleteStatisticsByUserId(@PathVariable Long userId) {
+        statisticsService.deleteStatisticsByUserId(userId);
+    }
 }

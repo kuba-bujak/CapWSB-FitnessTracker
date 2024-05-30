@@ -48,33 +48,33 @@ Stworzone API powinno pozwalać na:
 
 Stworzone API powinno pozwalać na:
 
-- [ ] wylistowanie podstawowych informacji o wszystkich statystykach zapisanych w systemie
-- [ ] utworzenie nowych statystyk
-- [ ] aktualizacja Statystyk Użytkownika implementacja funkcjonalności do aktualizacji istniejących statystyk dla
+- [x] wylistowanie podstawowych informacji o wszystkich statystykach zapisanych w systemie
+- [x] utworzenie nowych statystyk
+- [x] aktualizacja Statystyk Użytkownika implementacja funkcjonalności do aktualizacji istniejących statystyk dla
   użytkownika.
-- [ ] pobranie szczegółów dotyczących statystyk dla danego użytkownika
-- [ ] usunięcie statystyk
-- [ ] wyszukiwanie użytkowników po e-mailu, bez rozróżniania wielkości liter, wyszukujące po fragmencie nazwy (zwracane
+- [x] pobranie szczegółów dotyczących statystyk dla danego użytkownika
+- [x] usunięcie statystyk
+- [x] wyszukiwanie użytkowników po e-mailu, bez rozróżniania wielkości liter, wyszukujące po fragmencie nazwy (zwracane
   tylko ID oraz e-mail użytkowników)
-- [ ] wyszukiwanie użytkowników po wieku starszym niż zdefiniowany
+- [x] wyszukiwanie użytkowników po wieku starszym niż zdefiniowany
 
 ### Wymagania techniczne
 
-- [ ] przygotowanie danych wejściowych (uzupełnienie skryptu ładującego dane przy starcie aplikacji)
-- [ ] API sieciowe powinno wykorzystywać protokół HTTP oraz format JSON do transferu danych
-- [ ] w repozytoriach rozwiązanie może wykorzystywać metody dostarczane przez interfejs JpaRepository oraz metody
+- [x] przygotowanie danych wejściowych (uzupełnienie skryptu ładującego dane przy starcie aplikacji)
+- [x] API sieciowe powinno wykorzystywać protokół HTTP oraz format JSON do transferu danych
+- [x] w repozytoriach rozwiązanie może wykorzystywać metody dostarczane przez interfejs JpaRepository oraz metody
   domyślne, pobierające dane za pomocą `findAll()` oraz przetwarzające je za pomocą strumieni (`Stream`). Przykład
   znaleźć można w `UserRepository`
-- [ ] rozwiązanie powinno spełniać zasady SOLID
-- [ ] rozwiązanie powinno być pokryte testami jednostkowymi (>80%)
-- [ ] OPCJONALNE rozwiązanie powinno implementować logikę potrzebną do spełnienia już
+- [x] rozwiązanie powinno spełniać zasady SOLID
+- [x] rozwiązanie powinno być pokryte testami jednostkowymi (>80%)
+- [x] OPCJONALNE rozwiązanie powinno implementować logikę potrzebną do spełnienia już
   istniejących [testów integracyjnych API]
   . NIE należy zmieniać logiki tych testów.
-- [ ] rozwiązanie powinno być odpowiednio zhermetyzowane (nie udostępniać funkcjonalności pozostałym pakietom programu)
-- [ ] kod powinien być odpowiednio udokumentowany za pomocą JavaDoc
-- [ ] do kodu powinna zostać dołączona wyeksportowana kolekcja zapytań z programu Postman, pozwalająca przetestować
+- [x] rozwiązanie powinno być odpowiednio zhermetyzowane (nie udostępniać funkcjonalności pozostałym pakietom programu)
+- [x] kod powinien być odpowiednio udokumentowany za pomocą JavaDoc
+- [x] do kodu powinna zostać dołączona wyeksportowana kolekcja zapytań z programu Postman, pozwalająca przetestować
   stworzone API
-- [ ] rozwiązanie powinno wykorzystywać zwykłe klasy Javowe do definicji obiektów transferu danych (DTO)
+- [x] rozwiązanie powinno wykorzystywać zwykłe klasy Javowe do definicji obiektów transferu danych (DTO)
 
 ## ZADANIE 3. Programowanie aspektowe.
 

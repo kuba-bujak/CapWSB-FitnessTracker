@@ -1,7 +1,6 @@
 package com.capgemini.wsb.fitnesstracker.statistics.internal;
 
 import com.capgemini.wsb.fitnesstracker.statistics.api.Statistics;
-import com.capgemini.wsb.fitnesstracker.statistics.api.StatisticsDto;
 import com.capgemini.wsb.fitnesstracker.user.internal.UserMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
