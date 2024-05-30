@@ -9,3 +9,7 @@ spring:
       enabled: true
   profiles:
     active: loadInitialData
+
+logging:
+  level:
+    org.springframework.aop.aspectj: DEBUG
