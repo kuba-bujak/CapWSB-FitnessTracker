@@ -285,7 +285,7 @@
 		{
 			"name": "updateUser",
 			"request": {
-				"method": "PATCH",
+				"method": "PUT",
 				"header": [
 					{
 						"key": "id",
@@ -296,7 +296,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"firstName\": \"Kuba\",\r\n  \"lastName\": \"sadsad\",\r\n  \"birthdate\": \"1993-05-14\",\r\n  \"email\": \"emma.dose@exsample.com\"\r\n}\r\n",
+					"raw": "{\r\n  \"firstName\": \"Bartek\",\r\n  \"lastName\": \"sadsad\",\r\n  \"birthdate\": \"1993-05-14\",\r\n  \"email\": \"emma.dose@exsample.com\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -304,7 +304,7 @@
 					}
 				},
 				"url": {
-					"raw": "localhost:8080/v1/users/user/1?fieldName=firstName&fieldValue=Jakub",
+					"raw": "localhost:8080/v1/users/1",
 					"host": [
 						"localhost"
 					],
@@ -312,7 +312,6 @@
 					"path": [
 						"v1",
 						"users",
-						"user",
 						"1"
 					],
 					"query": [
@@ -325,14 +324,6 @@
 							"key": "age",
 							"value": "40",
 							"disabled": true
-						},
-						{
-							"key": "fieldName",
-							"value": "firstName"
-						},
-						{
-							"key": "fieldValue",
-							"value": "Jakub"
 						}
 					]
 				}

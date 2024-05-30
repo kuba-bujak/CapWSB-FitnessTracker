@@ -158,10 +158,19 @@
 		{
 			"name": "UpdateTraining",
 			"request": {
-				"method": "PATCH",
+				"method": "PUT",
 				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"userId\": 1,\r\n    \"startTime\": \"2024-05-26T08:30:00Z\",\r\n    \"endTime\": \"2024-05-26T10:00:00Z\",\r\n    \"activityType\": \"RUNNING\",\r\n    \"distance\": 12,\r\n    \"averageSpeed\": 6\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
 				"url": {
-					"raw": "localhost:8080/v1/trainings/training/1?fieldName=distance&fieldValue=5",
+					"raw": "localhost:8080/v1/trainings/1",
 					"host": [
 						"localhost"
 					],
@@ -169,18 +178,7 @@
 					"path": [
 						"v1",
 						"trainings",
-						"training",
 						"1"
-					],
-					"query": [
-						{
-							"key": "fieldName",
-							"value": "distance"
-						},
-						{
-							"key": "fieldValue",
-							"value": "5"
-						}
 					]
 				}
 			},
