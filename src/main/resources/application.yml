@@ -7,8 +7,10 @@ spring:
   h2:
     console:
       enabled: true
-  profiles:
-    active: loadInitialData
+#  profiles:
+#    active: loadInitialData
+  mail:
+    from: your-email@example.com
 
 logging:
   level:
