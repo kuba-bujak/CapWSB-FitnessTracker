@@ -117,7 +117,7 @@ class TrainingController {
 
         if (user.isPresent()) {
             Training trainingToUpdate = trainingMapper.toEntity(trainingWithUserIdTO, user.get());
-            trainingToUpdate.setId(id); // Ensure the ID is set for updating the existing record
+            trainingToUpdate.setId(id);
             Training updatedTraining = trainingService.updateTraining(trainingToUpdate);
             return new ResponseEntity<>(trainingMapper.toTraining(updatedTraining), HttpStatus.OK);
         }
