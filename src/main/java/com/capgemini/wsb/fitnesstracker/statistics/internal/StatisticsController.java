@@ -2,6 +2,8 @@ package com.capgemini.wsb.fitnesstracker.statistics.internal;
 
 import com.capgemini.wsb.fitnesstracker.statistics.api.Statistics;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -13,28 +15,63 @@ class StatisticsController {
 
     private final StatisticsServiceImpl statisticsService;
 
+    /**
+     * Retrieves all statistics available.
+     *
+     * @return A ResponseEntity containing a list of all {@link Statistics} objects
+     */
     @GetMapping
-    public List<Statistics> getAllStatistics() {
-        return statisticsService.getAllStatistics();
+    public ResponseEntity<List<Statistics>> getAllStatistics() {
+        List<Statistics> allStatistics = statisticsService.getAllStatistics();
+        return ResponseEntity.ok(allStatistics);
     }
 
+    /**
+     * Creates new statistics entry.
+     *
+     * @param statistics the statistics object to be created
+     * @return A ResponseEntity containing the created {@link Statistics} object
+     */
     @PostMapping
-    public Statistics createStatistics(@RequestBody Statistics statistics) {
-        return statisticsService.createStatictics(statistics);
+    public ResponseEntity<Statistics> createStatistics(@RequestBody Statistics statistics) {
+        Statistics createdStatistics = statisticsService.createStatictics(statistics);
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdStatistics);
     }
 
+    /**
+     * Updates the statistics for a given user ID.
+     *
+     * @param userId the user ID whose statistics are to be updated
+     * @param statistics the new statistics data
+     * @return A ResponseEntity containing the updated {@link Statistics} object
+     */
     @PutMapping("/{userId}")
-    public Statistics updateStatistics(@PathVariable Long userId, @RequestBody Statistics statistics) {
-        return statisticsService.updateStatistics(userId, statistics);
+    public ResponseEntity<Statistics> updateStatistics(@PathVariable Long userId, @RequestBody Statistics statistics) {
+        Statistics updatedStatistics = statisticsService.updateStatistics(userId, statistics);
+        return ResponseEntity.ok().body(updatedStatistics);
     }
 
+    /**
+     * Retrieves the statistics for a given user ID.
+     *
+     * @param userId the user ID whose statistics are to be retrieved
+     * @return A ResponseEntity containing the located {@link Statistics} object
+     */
     @GetMapping("/user/{userId}")
-    public Statistics getStatisticsByUserId(@PathVariable Long userId) {
-        return statisticsService.getStatisticsByUserId(userId);
+    public ResponseEntity<Statistics> getStatisticsByUserId(@PathVariable Long userId) {
+        Statistics statistics = statisticsService.getStatisticsByUserId(userId);
+        return ResponseEntity.ok(statistics);
     }
 
+    /**
+     * Deletes the statistics for a given user ID.
+     *
+     * @param userId the user ID whose statistics are to be deleted
+     * @return A ResponseEntity indicating the success of the operation
+     */
     @DeleteMapping("/{userId}")
-    public void deleteStatisticsByUserId(@PathVariable Long userId) {
+    public ResponseEntity<Void> deleteStatisticsByUserId(@PathVariable Long userId) {
         statisticsService.deleteStatisticsByUserId(userId);
+        return ResponseEntity.noContent().build();
     }
 }

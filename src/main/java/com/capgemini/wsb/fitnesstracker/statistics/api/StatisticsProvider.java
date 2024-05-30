@@ -14,5 +14,10 @@ public interface StatisticsProvider {
      */
     Optional<Statistics> getStatistics(Long statisticsId);
 
+    /**
+     * Retrieves all statistics available.
+     *
+     * @return A list of all {@link Statistics} objects
+     */
     List<Statistics> getAllStatistics();
 }

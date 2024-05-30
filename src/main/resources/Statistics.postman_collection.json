@@ -68,7 +68,7 @@
 					}
 				},
 				"url": {
-					"raw": "localhost:8080/v1/statistics/1",
+					"raw": "localhost:8080/v1/statistics/2",
 					"host": [
 						"localhost"
 					],
@@ -76,7 +76,7 @@
 					"path": [
 						"v1",
 						"statistics",
-						"1"
+						"2"
 					]
 				}
 			},
@@ -88,7 +88,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "localhost:8080/v1/statistics/user/1",
+					"raw": "localhost:8080/v1/statistics/user/2",
 					"host": [
 						"localhost"
 					],
@@ -97,7 +97,7 @@
 						"v1",
 						"statistics",
 						"user",
-						"1"
+						"2"
 					]
 				}
 			},
@@ -109,7 +109,7 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "localhost:8080/v1/statistics/1",
+					"raw": "localhost:8080/v1/statistics/2",
 					"host": [
 						"localhost"
 					],
@@ -117,7 +117,7 @@
 					"path": [
 						"v1",
 						"statistics",
-						"1"
+						"2"
 					]
 				}
 			},
